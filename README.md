@@ -1,2 +1,7 @@
 # ponto-de-venda
-Ponto de venda em python, com os dados importados/exportados através de arquivos csv, para estudo e análise de casos de data science.
+/***************************************************************************/
+                            PONTO DE VENDA                                
+/***************************************************************************/
+
+Ponto de venda em python utilizando o nosql redis, para cases de estudo e data science.
+                                                                                 
