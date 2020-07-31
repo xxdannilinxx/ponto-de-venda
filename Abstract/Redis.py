@@ -1,14 +1,26 @@
 import redis
+import json
+
 
 #
 # Conexão com o redis
 #
-connection = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(host='localhost', port=6379, db=0)
 
-# https://www.youtube.com/watch?v=Hbt56gFj998
-# cursor, keys = r.scan(match='123*')
-# data = r.mget(keys)
-# connection.delete('1')
-connection.lpush('pessoa', [1, 2])
-for key in connection.scan_iter():
-    print(key)
+
+# mydict = { 'var1' : 5, 'var2' : 9, 'var3': [1, 5, 9] }
+# rval = json.dumps(mydict)
+# r.set('key1', rval)
+
+# data = r.get('key1')
+# result = json.loads(data)
+# arr = result['var3']
+# for i in result:
+#     print(i)
+#     print(result[i])
+
+
+
+
+# print(result)
+# print(arr)

@@ -38,11 +38,9 @@ def PDV(menu=''):
     #
     while opcao != 'encerrar':
         if regex.search("^abrir", opcao):
-            cx = Caixa()
-            cx.abrir(1)
-            PDV()
+            Caixa().abrir()
         elif regex.search("^fechar", opcao):
-            print(0)
+            Caixa().fechar()
         elif regex.search("^iniciar", opcao):
             print(0)
         elif regex.search("^cancelar", opcao):
@@ -59,10 +57,21 @@ def PDV(menu=''):
             print(0)
         elif regex.search("^rmpessoa", opcao):
             print(0)
+        elif regex.search("^encerrar", opcao):
+            # return
+            print(opcao)
+            print(opcao)
+            print(opcao)
         else:
             Util.message('danger',
-                     '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
+                         '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
             PDV(True)
-        return
+        PDV()
+    else:
+        Util.message(
+            'info', 'Até logo... obrigado por usar nosso ponto de venda! =)')
+        exit()
+
+
 if __name__ == "__main__":
     PDV(True)
