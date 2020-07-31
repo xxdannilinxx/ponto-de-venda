@@ -57,11 +57,6 @@ def PDV(menu=''):
             print(0)
         elif regex.search("^rmpessoa", opcao):
             print(0)
-        elif regex.search("^encerrar", opcao):
-            # return
-            print(opcao)
-            print(opcao)
-            print(opcao)
         else:
             Util.message('danger',
                          '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
