@@ -1,7 +1,4 @@
 # ponto-de-venda
-/***************************************************************************/
-                            PONTO DE VENDA                                
-/***************************************************************************/
+Ponto de venda em python utilizando o NoSQL Redis, para análise de data science, cases de estudo e afins.
 
-Ponto de venda em python utilizando o nosql redis, para cases de estudo e data science.
                                                                                  
