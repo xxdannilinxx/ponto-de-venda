@@ -3,11 +3,11 @@ from Abstract.Util import Util
 from Caixa.Caixa import Caixa
 
 
-def PDV(menu=''):
+def PDV(ocultarMenu=False):
     #
     # Menu inicial de opções
     #
-    if menu:
+    if ocultarMenu:
         Util.message('warning',
                      '/***************************************************************************/\n' +
                      '                               PONTO DE VENDA                                \n' +
@@ -60,8 +60,8 @@ def PDV(menu=''):
         else:
             Util.message('danger',
                          '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
-            PDV(True)
-        PDV()
+            PDV()
+        PDV(True)
     else:
         Util.message(
             'info', 'Até logo... obrigado por usar nosso ponto de venda! =)')
@@ -69,4 +69,4 @@ def PDV(menu=''):
 
 
 if __name__ == "__main__":
-    PDV(True)
+    PDV()
