@@ -8,6 +8,8 @@ import json
 r = redis.Redis(host='localhost', port=6379, db=0)
 
 
+
+#https://www.youtube.com/watch?v=Hbt56gFj998
 # mydict = { 'var1' : 5, 'var2' : 9, 'var3': [1, 5, 9] }
 # rval = json.dumps(mydict)
 # r.set('key1', rval)

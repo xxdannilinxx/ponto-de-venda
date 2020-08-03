@@ -11,18 +11,42 @@ class Caixa():
 
     def abrir(self):
         if self.getCaixa():
-            Util.message('danger', 'O caixa já foi aberto em {data} por {assinatura}, encerre o caixa e tente novamente.'.format(
-                data=self.getData(), assinatura=self.getAssinatura()))
+            Util.message('danger', 'O caixa já foi aberto em ' + str(self.getData()) +
+                         ' por ' + str(self.getAssinatura()) + ', encerre o caixa e tente novamente.')
         else:
             assinatura = input('Assinatura: ')
-            r.set('caixa', json.dumps({'total': 0, 'data': datetime.datetime.now(
-            ), 'assinatura': assinatura}, indent=4, default=str))
-            Util.message('success', 'Caixa aberto com sucesso!')
+            if not assinatura:
+                assinatura == input('Assinatura: ')
+                return
+            data = datetime.datetime.now().strftime('%d/%m/%Y')
+            Util.message('info',
+                         '-------------------------------\n' +
+                         '       ABERTURA DE CAIXA       \n' +
+                         '-------------------------------\n' +
+                         'DATA\n' +
+                         str(data) + '\n' +
+                         '-------------------------------\n' +
+                         'ASSINATURA\n' +
+                         str(assinatura) + '\n' +
+                         '-------------------------------\n')
+            r.set('caixa', json.dumps({'total': 0, 'data': data, 'assinatura': assinatura}, indent=4, default=str))
 
     def fechar(self):
         if self.getCaixa():
+            data = datetime.datetime.now().strftime('%d/%m/%Y')
+            Util.message('danger', 'O caixa já foi aberto em {data} por {assinatura}, encerre o caixa e tente novamente.'.format(
+                data=self.getData(), assinatura=self.getAssinatura()))
+            Util.message('info',
+                         '-------------------------------\n' +
+                         '       FECHAMENTO DE CAIXA     \n' +
+                         '-------------------------------\n' +
+                         'DATA\n' +
+                         str(data) + '\n' +
+                         '-------------------------------\n' +
+                         'ASSINATURA\n' +
+                         str(self.getAssinatura()) + '\n' +
+                         '-------------------------------\n')
             r.delete('caixa')
-            Util.message('success', 'Caixa fechado sucesso!')
         else:
             Util.message(
                 'danger', 'O caixa já encontra-se fechado no momento.')

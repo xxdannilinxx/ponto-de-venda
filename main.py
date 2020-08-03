@@ -1,13 +1,14 @@
 import re as regex
 from Abstract.Util import Util
 from Caixa.Caixa import Caixa
+from Pessoas.Pessoa import Pessoa
 
 
-def PDV(ocultarMenu=False):
+def PDV(exibirMenu):
     #
     # Menu inicial de opções
     #
-    if ocultarMenu:
+    if exibirMenu:
         Util.message('warning',
                      '/***************************************************************************/\n' +
                      '                               PONTO DE VENDA                                \n' +
@@ -50,18 +51,18 @@ def PDV(ocultarMenu=False):
         elif regex.search("^vendas", opcao):
             print(0)
         elif regex.search("^pessoas", opcao):
-            print(0)
+            Pessoa().lista()
         elif regex.search("^pessoa", opcao):
             print(0)
         elif regex.search("^addpessoa", opcao):
-            print(0)
+            Pessoa().adicionar()
         elif regex.search("^rmpessoa", opcao):
             print(0)
         else:
             Util.message('danger',
                          '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
-            PDV()
-        PDV(True)
+            PDV(True)
+        PDV(False)
     else:
         Util.message(
             'info', 'Até logo... obrigado por usar nosso ponto de venda! =)')
@@ -69,4 +70,4 @@ def PDV(ocultarMenu=False):
 
 
 if __name__ == "__main__":
-    PDV()
+    PDV(True)
