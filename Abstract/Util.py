@@ -1,4 +1,3 @@
-
 import os
 
 #
@@ -10,13 +9,13 @@ class Util():
     #
     def message(type, mensagem):
         if type == 'success':
-            print('\n\033[32m', mensagem, '\033[0;0m\n')
+            print('\033[32m', mensagem, '\033[0;0m')
         elif type == 'danger':
-            print('\n\033[31m', mensagem, '\033[0;0m\n')
+            print('\033[31m', mensagem, '\033[0;0m')
         elif type == 'info':
-            print('\n\033[34m', mensagem, '\033[0;0m\n')
+            print('\033[34m', mensagem, '\033[0;0m')
         elif type == 'warning':
-            print('\n\033[33m', mensagem, '\033[0;0m\n')
+            print('\033[33m', mensagem, '\033[0;0m')
         else:
             print(mensagem)
 

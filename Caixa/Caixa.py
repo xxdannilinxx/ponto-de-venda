@@ -1,7 +1,8 @@
-from Abstract.Util import Util
-from Abstract.Redis import r
 import json
 import datetime
+
+from Abstract.Util import Util
+from Abstract.Redis import r
 
 
 class Caixa():

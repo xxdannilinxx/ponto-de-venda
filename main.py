@@ -1,4 +1,5 @@
 import re as regex
+
 from Abstract.Util import Util
 from Caixa.Caixa import Caixa
 from Pessoas.Pessoa import Pessoa
@@ -16,7 +17,6 @@ def PDV(exibirMenu):
                      '                                                                             \n' +
                      ' abrir - Abertura de caixa.                                                  \n' +
                      ' fechar - Fechamento de caixa.                                               \n' +
-                     ' iniciar - Inicia uma venda.                                                 \n' +
                      ' cancelar - Cancela a venda em andamento ou a venda informada.               \n' +
                      ' finalizar - Finaliza a venda em andamento.                                  \n' +
                      ' vendas - Lista as vendas por data.                                          \n' +
@@ -30,7 +30,7 @@ def PDV(exibirMenu):
                      '                                                                             \n'
                      )
     Util.message('warning',
-                 'Informe a opção desejada: '
+                 '\nInforme a opção desejada: '
                  )
     opcao = input()
 
@@ -42,8 +42,6 @@ def PDV(exibirMenu):
             Caixa().abrir()
         elif regex.search("^fechar", opcao):
             Caixa().fechar()
-        elif regex.search("^iniciar", opcao):
-            print(0)
         elif regex.search("^cancelar", opcao):
             print(0)
         elif regex.search("^finalizar", opcao):
@@ -65,7 +63,7 @@ def PDV(exibirMenu):
         PDV(False)
     else:
         Util.message(
-            'info', 'Até logo... obrigado por usar nosso ponto de venda! =)')
+            'info', '\nAté logo... obrigado por usar nosso ponto de venda! =)')
         exit()
 
 
