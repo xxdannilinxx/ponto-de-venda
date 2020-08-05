@@ -3,27 +3,66 @@ import datetime
 
 from Abstract.Util import Util
 from Abstract.Redis import r
-#//https://www.dailysmarty.com/posts/redis-lists
+# //https://www.dailysmarty.com/posts/redis-lists
+
 
 class Pessoa():
-
-    # def __init__(self, id, nome, idade):
-    #     self.id = id
-    #     self.nome = nome
-    #     self.idade = idade
-
     def lista(self):
         pessoas = r.lrange('pessoas', 0, -1)
-        # pessoas = r.keys('pessoas:*')
+        return pessoas
+
+    def pessoas(self):
+        pessoas = self.lista()
         if not pessoas:
             Util.message('info', 'Nenhuma pessoa cadastrada até o momento.')
         for pessoa in pessoas:
-            x = json.loads(pessoa) 
-            Util.message('success' if x['situacao'] == 'ativo' else 'danger', str(x['id']) + ' - ' + str(x['nome']) + ' <' + x['email'] + '>')
+            pessoa = json.loads(pessoa)
+            Util.message('success' if pessoa['situacao'] == 'ativo' else 'danger', str(
+                pessoa['id']) + ' - ' + str(pessoa['nome']) + ' <' + str(pessoa['email']) + '>')
 
     def adicionar(self):
         id = (r.llen('pessoas') + 1)
-        r.lpush('pessoas', json.dumps({'id': id, 'nome': 'José', 'email': 'jose@gmail.com', 'situacao': 'ativo'}, indent=4, default=str))
+        nome = input('Informe o nome: ')
+        email = input('Informe o email: ')
+        r.lpush('pessoas', json.dumps(
+            {'id': id, 'nome': nome, 'email': email, 'situacao': 'ativo'}, indent=4, default=str))
+
+    def buscar(self, email):
+        pessoas = self.lista()
+        def filtrar(email):
+            for pessoa in pessoas:
+                pessoa = json.loads(pessoa)
+                if pessoa['email'] == email:
+                    return True
+            return False
+
+        return filter(filtrar, [email])
+
+    def remover(self):
+        email = input('Informe o email: ')
+        
+        for pessoa in self.buscar(email): 
+            print(pessoa)
+            Util.message('success', 'Pessoa removida com sucesso.')
+            return True
+        Util.message('info', 'Pessoa não encontrada.')
+        self.remover()
+        # if buscar(email):
+        #     print('achou')
+        # else:
+        #     print('n achou')
+
+
+
+#####
+
+
+
+# COLOCAR OPÇAO X PARA CANCELAR
+
+
+###
+
 
     def setId(self, id):
         self.id = id

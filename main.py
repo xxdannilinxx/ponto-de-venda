@@ -49,13 +49,13 @@ def PDV(exibirMenu):
         elif regex.search("^vendas", opcao):
             print(0)
         elif regex.search("^pessoas", opcao):
-            Pessoa().lista()
+            Pessoa().pessoas()
         elif regex.search("^pessoa", opcao):
             print(0)
         elif regex.search("^addpessoa", opcao):
             Pessoa().adicionar()
         elif regex.search("^rmpessoa", opcao):
-            print(0)
+            Pessoa().remover()
         else:
             Util.message('danger',
                          '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
