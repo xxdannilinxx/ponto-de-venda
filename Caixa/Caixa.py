@@ -15,9 +15,14 @@ class Caixa():
             Util.message('danger', 'O caixa já foi aberto em ' + str(self.getData()) +
                          ' por ' + str(self.getAssinatura()) + ', encerre o caixa e tente novamente.')
         else:
-            assinatura = input('Assinatura: ')
+            assinatura = input('Informe (assinatura/x para cancelar): ')
+            if assinatura == 'x':
+                return False
+
             if not assinatura:
-                assinatura == input('Assinatura: ')
+                assinatura = input('Informe (assinatura/x para cancelar): ')
+                if assinatura == 'x':
+                    return False
                 return
             data = datetime.datetime.now().strftime('%d/%m/%Y')
             Util.message('info',

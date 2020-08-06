@@ -14,7 +14,9 @@ def PDV(exibirMenu):
                      '/***************************************************************************/\n' +
                      '                               PONTO DE VENDA                                \n' +
                      '                            ESCOLHA A OPÇÃO DESEJADA                         \n' +
+                     '/***************************************************************************/\n' +
                      '                                                                             \n' +
+                     ' menu - Exibir menu de opções                                                \n' +
                      ' abrir - Abertura de caixa.                                                  \n' +
                      ' fechar - Fechamento de caixa.                                               \n' +
                      ' cancelar - Cancela a venda em andamento ou a venda informada.               \n' +
@@ -26,7 +28,6 @@ def PDV(exibirMenu):
                      ' rmpessoa - Remove uma pessoa aos registros.                                 \n' +
                      ' relatorios - Exibe as opções de relatórios                                  \n' +
                      ' encerrar - Encerra o programa.                                              \n' +
-                     '/***************************************************************************/\n' +
                      '                                                                             \n'
                      )
     Util.message('warning',
@@ -38,7 +39,9 @@ def PDV(exibirMenu):
     # Core das opções
     #
     while opcao != 'encerrar':
-        if regex.search("^abrir", opcao):
+        if regex.search("^menu", opcao):
+            PDV(True)
+        elif regex.search("^abrir", opcao):
             Caixa().abrir()
         elif regex.search("^fechar", opcao):
             Caixa().fechar()
@@ -59,7 +62,7 @@ def PDV(exibirMenu):
         else:
             Util.message('danger',
                          '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
-            PDV(True)
+            PDV(False)
         PDV(False)
     else:
         Util.message(
