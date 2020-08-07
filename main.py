@@ -4,7 +4,6 @@ from Abstract.Util import Util
 from Caixa.Caixa import Caixa
 from Pessoas.Pessoa import Pessoa
 
-
 def PDV(exibirMenu):
     #
     # Menu inicial de opções
@@ -23,7 +22,7 @@ def PDV(exibirMenu):
                      ' finalizar - Finaliza a venda em andamento.                                  \n' +
                      ' vendas - Lista as vendas por data.                                          \n' +
                      ' pessoas - Lista os clientes cadastrados.                                    \n' +
-                     ' pessoa - Define o cliente da venda.                                         \n' +
+                     ' selecionarpessoa - Define o cliente da venda.                               \n' +
                      ' addpessoa - Adiciona uma pessoa aos registros.                              \n' +
                      ' rmpessoa - Remove uma pessoa aos registros.                                 \n' +
                      ' relatorios - Exibe as opções de relatórios                                  \n' +
@@ -53,8 +52,8 @@ def PDV(exibirMenu):
             print(0)
         elif regex.search("^pessoas", opcao):
             Pessoa().pessoas()
-        elif regex.search("^pessoa", opcao):
-            print(0)
+        elif regex.search("^selecionarpessoa", opcao):
+            Pessoa().selecionar()
         elif regex.search("^addpessoa", opcao):
             Pessoa().adicionar()
         elif regex.search("^rmpessoa", opcao):
