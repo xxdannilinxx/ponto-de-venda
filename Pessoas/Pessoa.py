@@ -34,7 +34,7 @@ class Pessoa():
             self.adicionar()
             return True
 
-        r.lpush('pessoas', json.dumps(
+        r.rpush('pessoas', json.dumps(
             {'id': id, 'nome': nome, 'email': email, 'situacao': 'ativo'}, indent=4, default=str))
         Util.message('success', 'Pessoa adicionada com sucesso.')
 
@@ -57,9 +57,7 @@ class Pessoa():
                 Util.message('info', 'A pessoa já está desativada.')
                 return False
             buscar['situacao'] = 'desativado'
-            print(int(buscar['id']))
-            print(r.lindex('pessoas', int(buscar['id'])))
-            # r.lset('pessoas', buscar['id'], json.dumps(buscar))
+            r.lset('pessoas', buscar['id'], json.dumps(buscar))
             Util.message('success', 'Pessoa removida com sucesso.')
             return True
         Util.message('info', 'Pessoa não encontrada.')

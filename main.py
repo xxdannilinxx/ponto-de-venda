@@ -3,6 +3,7 @@ import re as regex
 from Abstract.Util import Util
 from Caixa.Caixa import Caixa
 from Pessoas.Pessoa import Pessoa
+from Vendas.Vendas import Vendas
 
 def PDV(exibirMenu):
     #
@@ -18,14 +19,13 @@ def PDV(exibirMenu):
                      ' menu - Exibir menu de opções                                                \n' +
                      ' abrir - Abertura de caixa.                                                  \n' +
                      ' fechar - Fechamento de caixa.                                               \n' +
+                     ' addproduto produto*qtd - Adiciona produtos na venda em andamento.           \n' +
                      ' cancelar - Cancela a venda em andamento ou a venda informada.               \n' +
                      ' finalizar - Finaliza a venda em andamento.                                  \n' +
                      ' vendas - Lista as vendas por data.                                          \n' +
                      ' pessoas - Lista os clientes cadastrados.                                    \n' +
-                     ' selecionarpessoa - Define o cliente da venda.                               \n' +
                      ' addpessoa - Adiciona uma pessoa aos registros.                              \n' +
                      ' rmpessoa - Remove uma pessoa aos registros.                                 \n' +
-                     ' relatorios - Exibe as opções de relatórios                                  \n' +
                      ' encerrar - Encerra o programa.                                              \n' +
                      '                                                                             \n'
                      )
@@ -52,12 +52,16 @@ def PDV(exibirMenu):
             print(0)
         elif regex.search("^pessoas", opcao):
             Pessoa().pessoas()
-        elif regex.search("^selecionarpessoa", opcao):
-            Pessoa().selecionar()
         elif regex.search("^addpessoa", opcao):
             Pessoa().adicionar()
         elif regex.search("^rmpessoa", opcao):
             Pessoa().remover()
+        elif regex.search("^addproduto", opcao):
+            opcao = regex.sub('[^0-9*]', '', opcao)
+            opcao = regex.split('[*]', opcao)
+            produto = opcao[0] if len(opcao) > 1 else False
+            quantidade = opcao[1] if len(opcao) > 1 else 1
+            Vendas.adicionarProduto(produto, quantidade)
         else:
             Util.message('danger',
                          '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')
