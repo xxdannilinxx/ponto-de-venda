@@ -59,9 +59,9 @@ def PDV(exibirMenu):
         elif regex.search("^addproduto", opcao):
             opcao = regex.sub('[^0-9*]', '', opcao)
             opcao = regex.split('[*]', opcao)
-            produto = opcao[0] if len(opcao) > 1 else False
+            produto = opcao[0]
             quantidade = opcao[1] if len(opcao) > 1 else 1
-            Vendas.adicionarProduto(produto, quantidade)
+            Vendas().adicionarProduto(produto, quantidade)
         else:
             Util.message('danger',
                          '\nDesculpe, sua opção não foi encontrada, tente novamente...\n')

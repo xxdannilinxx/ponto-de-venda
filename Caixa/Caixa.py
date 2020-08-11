@@ -1,5 +1,4 @@
 import json
-import datetime
 
 from Abstract.Util import Util
 from Abstract.Redis import r
@@ -24,35 +23,34 @@ class Caixa():
                 if assinatura == 'x':
                     return False
                 return
-            data = datetime.datetime.now().strftime('%d/%m/%Y')
+
+            r.set('caixa', json.dumps(
+                {'total': 0, 'data': Util.dataAtual(), 'assinatura': assinatura}, indent=4, default=str))
             Util.message('info',
                          '-------------------------------\n' +
                          '       ABERTURA DE CAIXA       \n' +
                          '-------------------------------\n' +
                          'DATA\n' +
-                         str(data) + '\n' +
+                         str(Util.dataAtual()) + '\n' +
                          '-------------------------------\n' +
                          'ASSINATURA\n' +
                          str(assinatura) + '\n' +
                          '-------------------------------\n')
-            r.set('caixa', json.dumps({'total': 0, 'data': data, 'assinatura': assinatura}, indent=4, default=str))
 
     def fechar(self):
         if self.getCaixa():
-            data = datetime.datetime.now().strftime('%d/%m/%Y')
-            Util.message('danger', 'O caixa já foi aberto em {data} por {assinatura}, encerre o caixa e tente novamente.'.format(
-                data=self.getData(), assinatura=self.getAssinatura()))
+            Util.message('danger', 'O caixa já foi aberto em ' + str(self.getData()) + ' por ' + str(self.getAssinatura()) + ', encerre o caixa e tente novamente.')
+            r.delete('caixa')
             Util.message('info',
                          '-------------------------------\n' +
                          '       FECHAMENTO DE CAIXA     \n' +
                          '-------------------------------\n' +
                          'DATA\n' +
-                         str(data) + '\n' +
+                         str(Util.dataAtual()) + '\n' +
                          '-------------------------------\n' +
                          'ASSINATURA\n' +
                          str(self.getAssinatura()) + '\n' +
                          '-------------------------------\n')
-            r.delete('caixa')
         else:
             Util.message(
                 'danger', 'O caixa já encontra-se fechado no momento.')

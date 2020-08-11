@@ -1,5 +1,4 @@
 import json
-import datetime
 
 from Abstract.Util import Util
 from Abstract.Redis import r
@@ -37,6 +36,9 @@ class Pessoa():
         r.rpush('pessoas', json.dumps(
             {'id': id, 'nome': nome, 'email': email, 'situacao': 'ativo'}, indent=4, default=str))
         Util.message('success', 'Pessoa adicionada com sucesso.')
+        selecionar = input('Selecionar ' + str(nome) + '? (s/n): ')
+        if selecionar == 's':
+            self.selecionar(email)
 
     def buscar(self, campo, email):
         pessoas = self.lista()
@@ -45,8 +47,9 @@ class Pessoa():
                 return pessoa
         return False
 
-    def remover(self):
-        email = input('Informe (email/x para cancelar): ')
+    def remover(self, email=None):
+        if not email:
+            email = input('Informe (email/x para cancelar): ')
 
         if email == 'x':
             return False
