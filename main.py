@@ -22,9 +22,9 @@ def PDV(exibirMenu):
                      ' addproduto produto*qtd - Adiciona produtos na venda em andamento.           \n' +
                      ' cancelar - Cancela a venda em andamento ou a venda informada.               \n' +
                      ' finalizar - Finaliza a venda em andamento.                                  \n' +
-                     ' vendas - Lista as vendas por data.                                          \n' +
                      ' pessoas - Lista os clientes cadastrados.                                    \n' +
                      ' addpessoa - Adiciona uma pessoa aos registros.                              \n' +
+                     ' selecionarpessoa - Seleciona uma pessoa na venda.                           \n' +
                      ' rmpessoa - Remove uma pessoa aos registros.                                 \n' +
                      ' encerrar - Encerra o programa.                                              \n' +
                      '                                                                             \n'
@@ -45,13 +45,13 @@ def PDV(exibirMenu):
         elif regex.search("^fechar", opcao):
             Caixa().fechar()
         elif regex.search("^cancelar", opcao):
-            print(0)
+            Vendas().cancelar()
         elif regex.search("^finalizar", opcao):
-            print(0)
-        elif regex.search("^vendas", opcao):
-            print(0)
+            Vendas().finalizar()
         elif regex.search("^pessoas", opcao):
             Pessoa().pessoas()
+        elif regex.search("^selecionar", opcao):
+            Pessoa().selecionar()
         elif regex.search("^addpessoa", opcao):
             Pessoa().adicionar()
         elif regex.search("^rmpessoa", opcao):

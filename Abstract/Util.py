@@ -5,6 +5,8 @@ import locale
 #
 # Classe abstrata
 #
+
+
 class Util():
     #
     # Mensagens no shell
@@ -27,17 +29,17 @@ class Util():
     def dataAtual():
         return datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 
-    
     #
     # Conversão para moeda
     #
+
     def moeda(valor):
         locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
         return locale.currency(valor, grouping=True, symbol=None)
-    
 
     #
     # Limpar console do shell
     #
+
     def clear():
         return os.system('cls' if os.name == 'nt' else 'clear')

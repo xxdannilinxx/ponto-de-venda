@@ -3,7 +3,12 @@ import json
 from Abstract.Util import Util
 from Abstract.Redis import r
 
+
 class Pessoa():
+
+    def __init__(self):
+        self.setPessoa(json.loads(r.get('pessoa')) if r.exists('pessoa') else {})
+
     def lista(self):
         listaPessoas = []
         pessoas = r.lrange('pessoas', 0, -1)
@@ -15,6 +20,7 @@ class Pessoa():
         pessoas = self.lista()
         if not pessoas:
             Util.message('info', 'Nenhuma pessoa cadastrada até o momento.')
+
         for pessoa in pessoas:
             Util.message('success' if pessoa['situacao'] == 'ativo' else 'danger', str(
                 pessoa['id']) + ' - ' + str(pessoa['nome']) + ' <' + str(pessoa['email']) + '>')
@@ -26,7 +32,7 @@ class Pessoa():
 
         if nome == 'x' or email == 'x':
             return False
-        
+
         buscar = self.buscar('email', email)
         if buscar:
             Util.message('danger', 'Email já cadastrado.')
@@ -35,10 +41,12 @@ class Pessoa():
 
         r.rpush('pessoas', json.dumps(
             {'id': id, 'nome': nome, 'email': email, 'situacao': 'ativo'}, indent=4, default=str))
-        Util.message('success', 'Pessoa adicionada com sucesso.')
+
         selecionar = input('Selecionar ' + str(nome) + '? (s/n): ')
         if selecionar == 's':
             self.selecionar(email)
+
+        Util.message('success', 'Pessoa adicionada com sucesso.')
 
     def buscar(self, campo, email):
         pessoas = self.lista()
@@ -55,50 +63,63 @@ class Pessoa():
             return False
 
         buscar = self.buscar('email', email)
-        if buscar:
-            if buscar['situacao'] == 'desativado':
-                Util.message('info', 'A pessoa já está desativada.')
-                return False
-            buscar['situacao'] = 'desativado'
-            r.lset('pessoas', buscar['id'], json.dumps(buscar))
-            Util.message('success', 'Pessoa removida com sucesso.')
-            return True
-        Util.message('info', 'Pessoa não encontrada.')
-        self.remover()
+        if not buscar:
+            Util.message('info', 'Pessoa não encontrada.')
+            self.remover()
+            return False
 
-    def selecionar(self):
-        email = input('Informe (email/x para cancelar): ')
+        if buscar['email'] == self.getEmail():
+            Util.message(
+                'info', 'A pessoa o qual quer remover está selecionada.')
+            return False
+        if buscar['situacao'] == 'desativado':
+            Util.message('info', 'A pessoa já está desativada.')
+            return False
+
+        buscar['situacao'] = 'desativado'
+        r.lset('pessoas', buscar['id'], json.dumps(buscar))
+        Util.message('success', 'Pessoa removida com sucesso.')
+
+    def selecionar(self, email=None):
+        if not email:
+            email = input('Informe (email/x para cancelar): ')
 
         if email == 'x':
             return False
 
         buscar = self.buscar('email', email)
-        if buscar:
-            if buscar['situacao'] == 'desativado':
-                Util.message('info', 'A pessoa selecionada está desativada.')
-                return False
-            self.setId(buscar['id'])
-            self.setNome(buscar['nome'])
-            self.setEmail(buscar['email'])
-            Util.message('success', 'Pessoa selecionada com sucesso.')
-            return True
-        Util.message('info', 'Pessoa não encontrada.')
-        self.remover()
+        if not buscar:
+            Util.message('info', 'Pessoa não encontrada.')
+            self.selecionar()
+            return False
 
+        if buscar['situacao'] == 'desativado':
+            Util.message('info', 'A pessoa selecionada está desativada.')
+            return False
+
+        r.set('pessoa', json.dumps({'id': buscar['id'], 'nome': buscar['nome'], 'email': buscar['email']}, indent=4, default=str))
+        self.setPessoa(buscar)
+        
+    def setPessoa(self, pessoa):
+        self.pessoa = pessoa
+        
     def setId(self, id):
-        self.id = id
+        self.pessoa['id'] = id
 
     def setNome(self, nome):
-        self.nome = nome
+        self.pessoa['nome'] = nome
 
     def setEmail(self, email):
-        self.email = email
+        self.pessoa['email'] = email
+
+    def getPessoa(self):
+        return self.pessoa
 
     def getId(self):
-        return self.id
+        return self.pessoa['id']
 
     def getNome(self):
-        return self.nome
+        return self.pessoa['nome']
 
     def getEmail(self):
-        return self.email
+        return self.pessoa['email']
